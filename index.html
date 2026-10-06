@@ -4817,6 +4817,20 @@ document
         "click",
         () => {
 
+            /*
+               Al salir de la portada, el video debe detenerse por completo.
+               Esto evita que su audio continúe reproduciéndose en la pantalla 3.
+            */
+            if(videoPortada){
+
+                videoPortada.pause();
+                videoPortada.currentTime=0;
+                videoPortada.muted=true;
+
+                actualizarControlesVideo();
+
+            }
+
             // Al salir de la pantalla del video, la música vuelve a volumen normal.
             volumenMusicaNormal();
 
