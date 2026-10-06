@@ -859,7 +859,7 @@ button{
     position:absolute;
 
     left:50%;
-    top:40%;
+    top:32.5%;
 
     width:min(84vw,370px);
     height:min(56vh,470px);
@@ -3215,7 +3215,7 @@ button{
 
     .elsa-wrap{
         height:min(50vh,390px);
-        top:40%;
+        top:30%;
     }
 
     .portada-texto{
@@ -3397,6 +3397,20 @@ button{
 </head>
 
 <body>
+
+<!-- MÚSICA DE FONDO -->
+<audio
+    id="musicaFondo"
+    preload="auto"
+    autoplay
+    loop
+    playsinline
+>
+    <source
+        src="MUSICA.mp3"
+        type="audio/mpeg"
+    >
+</audio>
 
 
 <!-- =====================================================
@@ -3825,7 +3839,7 @@ button{
                     </span>
 
                     <strong>
-                        Martes· 20 de octubre
+                        Sábado · 17 de octubre
                     </strong>
 
                     <span>
@@ -3850,7 +3864,7 @@ button{
                     </span>
 
                     <strong>
-                        5:00 p. m.
+                        6:00 p. m.
                     </strong>
 
                     <span>
@@ -3875,11 +3889,11 @@ button{
                     </span>
 
                     <strong>
-                        Sala de juegos infantil "LULA KIDS"
+                        Parque Zonal Lloque Yupanqui
                     </strong>
 
                     <span>
-                        Mz. D Lt. 6 Los Portales del Norte - Los Olivos · Lima
+                        Los Olivos · Lima
                     </span>
 
                 </div>
@@ -3993,11 +4007,11 @@ button{
             <div class="direccion-texto">
 
                 <strong>
-                    Sala de juegos infantil "LULA KIDS"
+                    Parque Zonal Lloque Yupanqui
                 </strong>
 
                 <span>
-                    Mz. D Lt. 6 Los Portales del Norte (Ref. al frente de la comisaría Laura Caller) - Los Olivos · Lima
+                    Los Olivos · Lima
                 </span>
 
             </div>
@@ -4167,13 +4181,13 @@ button{
 
         <div class="resumen">
 
-            📅 Martes 20 de octubre de 2026<br>
+            📅 Sábado 17 de octubre de 2026<br>
 
-            🕕 5:00 p. m.<br>
+            🕕 6:00 p. m.<br>
 
-            📍 Sala de juegos infantil "LULA KIDS"<br>
+            📍 Parque Zonal Lloque Yupanqui<br>
 
-            ❄ Mz. D Lt. 6 Los Portales del Norte - Los Olivos
+            ❄ Los Olivos
 
         </div>
 
@@ -4369,6 +4383,90 @@ function generarBrillos(){
 
 
 /* =========================================================
+   MÚSICA DE FONDO
+========================================================= */
+
+const musicaFondo =
+    document.getElementById(
+        "musicaFondo"
+    );
+
+const VOLUMEN_MUSICA_NORMAL = 1;
+const VOLUMEN_MUSICA_PORTADA = 0.20;
+
+function reproducirMusicaFondo(){
+
+    if(!musicaFondo) return;
+
+    const promesa =
+        musicaFondo.play();
+
+    if(promesa && typeof promesa.catch === "function"){
+
+        promesa.catch(() => {
+            // El navegador puede bloquear el autoplay con sonido.
+            // La primera interacción del usuario lo habilitará.
+        });
+    }
+}
+
+function volumenMusicaNormal(){
+
+    if(!musicaFondo) return;
+
+    musicaFondo.volume =
+        VOLUMEN_MUSICA_NORMAL;
+}
+
+function volumenMusicaPortada(){
+
+    if(!musicaFondo) return;
+
+    musicaFondo.volume =
+        VOLUMEN_MUSICA_PORTADA;
+}
+
+if(musicaFondo){
+
+    musicaFondo.volume =
+        VOLUMEN_MUSICA_NORMAL;
+
+    // Intento de reproducción inmediata al abrir la página.
+    reproducirMusicaFondo();
+
+    // Si el navegador bloquea el autoplay con sonido,
+    // la primera interacción inicia la música.
+    const iniciarMusicaConInteraccion = () => {
+
+        reproducirMusicaFondo();
+
+        document.removeEventListener(
+            "pointerdown",
+            iniciarMusicaConInteraccion
+        );
+
+        document.removeEventListener(
+            "keydown",
+            iniciarMusicaConInteraccion
+        );
+
+    };
+
+    document.addEventListener(
+        "pointerdown",
+        iniciarMusicaConInteraccion,
+        {passive:true}
+    );
+
+    document.addEventListener(
+        "keydown",
+        iniciarMusicaConInteraccion
+    );
+
+}
+
+
+/* =========================================================
    CONTROLES DEL VIDEO DE PORTADA
 ========================================================= */
 
@@ -4469,7 +4567,12 @@ if(videoPortada){
 
     videoPortada.addEventListener(
         "ended",
-        actualizarControlesVideo
+        () => {
+
+            actualizarControlesVideo();
+            volumenMusicaNormal();
+
+        }
     );
 
 }
@@ -4665,6 +4768,9 @@ sobre.addEventListener(
                 "portada"
             );
 
+            // Durante el video, la música de fondo queda al 20%.
+            volumenMusicaPortada();
+
             /*
                El video entra limpio en 0 segundos y comienza
                automáticamente en silencio. El usuario puede
@@ -4711,6 +4817,9 @@ document
         "click",
         () => {
 
+            // Al salir de la pantalla del video, la música vuelve a volumen normal.
+            volumenMusicaNormal();
+
             mostrarPantalla(
                 "detalles"
             );
@@ -4748,7 +4857,7 @@ document
         () => {
 
             const mapaURL =
-                "https://maps.app.goo.gl/XVJsWmWic5ARrEUYA";
+                "https://www.google.com/maps/search/?api=1&query=Parque+Zonal+Lloque+Yupanqui+Los+Olivos+Lima";
 
             window.open(
                 mapaURL,
@@ -5017,7 +5126,7 @@ document
 ========================================================= */
 
 const NUMERO_WHATSAPP =
-    "920307134";
+    "51999999999";
 
 
 document
@@ -5043,9 +5152,9 @@ document
                 mensaje =
                     `Hola, soy ${nombre}. ❄️\n\n` +
                     `Confirmo mi asistencia al cumpleaños de Mei Ling por sus 5 añitos. 🎂✨\n\n` +
-                    `📅 Martes 20 de Octubre de 2026\n` +
-                    `🕕 5:00 p. m.\n` +
-                    `📍 Sala de jueves infantil "LULA KIDS" - Los Olivos\n\n` +
+                    `📅 Sábado 17 de octubre de 2026\n` +
+                    `🕕 6:00 p. m.\n` +
+                    `📍 Parque Zonal Lloque Yupanqui - Los Olivos\n\n` +
                     `Acompañantes: ${acompanantes}`;
 
             }
@@ -5127,6 +5236,8 @@ document
                 actualizarControlesVideo();
 
             }
+
+            volumenMusicaNormal();
 
             mostrarPantalla(
                 "sobre"
