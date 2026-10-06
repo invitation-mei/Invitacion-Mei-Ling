@@ -4745,7 +4745,12 @@ sobre.addEventListener(
     () => {
 
         if(sobreAbierto) return;
-
+       
+        if(musicaFondo){
+        musicaFondo.muted = false;
+        musicaFondo.volume = VOLUMEN_MUSICA_NORMAL;
+        reproducirMusicaFondo();
+    }
         sobreAbierto=true;
 
         sobre.classList.add(
