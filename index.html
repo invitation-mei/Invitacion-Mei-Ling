@@ -859,10 +859,10 @@ button{
     position:absolute;
 
     left:50%;
-    top:43%;
+    top:40%;
 
-    width:min(92vw,430px);
-    height:min(70vh,590px);
+    width:min(84vw,370px);
+    height:min(56vh,470px);
 
     transform:
         translate(-50%,-50%);
@@ -872,7 +872,7 @@ button{
     justify-content:center;
     align-items:center;
 
-    z-index:2;
+    z-index:7;
 
     pointer-events:none;
 
@@ -968,6 +968,10 @@ button{
 
     object-position:center;
 
+    border-radius:18px;
+
+    pointer-events:auto;
+
     filter:
         drop-shadow(
             0 15px 25px rgba(0,0,0,.35)
@@ -978,6 +982,133 @@ button{
 
     animation:
         elsaFlota 5s ease-in-out infinite;
+}
+
+.video-controles{
+
+    position:absolute;
+
+    left:50%;
+    bottom:10px;
+
+    transform:translateX(-50%);
+
+    width:min(92%,330px);
+
+    min-height:44px;
+
+    padding:6px 8px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+
+    border-radius:18px;
+
+    background:rgba(3,13,32,.78);
+    border:1px solid rgba(220,249,255,.25);
+    box-shadow:0 6px 22px rgba(0,0,0,.35);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    z-index:20;
+
+    pointer-events:auto;
+}
+
+.video-control{
+
+    width:34px;
+    height:34px;
+    flex:0 0 34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(220,249,255,.25);
+
+    font-size:.9rem;
+    line-height:1;
+
+    cursor:pointer;
+    pointer-events:auto;
+    touch-action:manipulation;
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.video-control:active{
+    transform:scale(.9);
+}
+
+.video-control:hover{
+    background:rgba(255,255,255,.22);
+}
+
+.video-volumen{
+
+    width:82px;
+    height:28px;
+
+    accent-color:#b9efff;
+    cursor:pointer;
+    pointer-events:auto;
+    touch-action:manipulation;
+}
+
+.video-sonido-hint{
+
+    position:absolute;
+    left:50%;
+    bottom:64px;
+
+    transform:translateX(-50%);
+
+    z-index:21;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    color:#fff;
+    background:rgba(5,27,58,.9);
+    border:1px solid rgba(205,245,255,.4);
+
+    font-size:.68rem;
+    font-weight:700;
+    letter-spacing:1.2px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.35);
+
+    cursor:pointer;
+    pointer-events:auto;
+    touch-action:manipulation;
+
+    animation:
+        sonidoPulso 1.8s ease-in-out infinite;
+}
+
+.video-sonido-hint.oculto{
+    display:none;
+}
+
+@keyframes sonidoPulso{
+
+    0%,100%{
+        transform:translateX(-50%) scale(1);
+    }
+
+    50%{
+        transform:translateX(-50%) scale(1.04);
+    }
 }
 
 @keyframes elsaFlota{
@@ -3083,8 +3214,8 @@ button{
     }
 
     .elsa-wrap{
-        height:64vh;
-        top:40%;
+        height:min(50vh,390px);
+        top:30%;
     }
 
     .portada-texto{
@@ -3161,8 +3292,8 @@ button{
 @media(max-height:580px){
 
     .elsa-wrap{
-        height:70vh;
-        top:39%;
+        height:min(44vh,280px);
+        top:28%;
     }
 
     .portada-texto{
@@ -3516,11 +3647,77 @@ button{
 
             <div class="elsa-aura"></div>
 
-            <img
+            <video
                 class="elsa-imagen"
-                src="https://i.pinimg.com/originals/e3/76/c0/e376c0578d12454097d9a439d4752bf4.gif"
-                alt="Elsa"
+                id="videoPortada"
+                autoplay
+                muted
+                playsinline
+                preload="auto"
+                aria-label="Video de la invitación de Mei Ling"
             >
+                <source
+                    src="https://invitation-mei.github.io/Invitacion-Mei-Ling/VIDEO.mp4"
+                    type="video/mp4"
+                >
+                Tu navegador no puede reproducir este video.
+            </video>
+
+            <div
+                class="video-controles"
+                id="videoControles"
+                aria-label="Controles del video"
+            >
+                <button
+                    type="button"
+                    class="video-control"
+                    id="videoPlayBtn"
+                    aria-label="Reproducir video"
+                    title="Reproducir / pausar"
+                >
+                    ▶
+                </button>
+
+                <button
+                    type="button"
+                    class="video-control"
+                    id="videoSoundBtn"
+                    aria-label="Activar sonido"
+                    title="Activar / silenciar sonido"
+                >
+                    🔇
+                </button>
+
+                <input
+                    class="video-volumen"
+                    id="videoVolume"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    value="1"
+                    aria-label="Volumen"
+                    title="Volumen"
+                >
+
+                <button
+                    type="button"
+                    class="video-control"
+                    id="videoFullscreenBtn"
+                    aria-label="Pantalla completa"
+                    title="Pantalla completa"
+                >
+                    ⛶
+                </button>
+            </div>
+
+            <button
+                type="button"
+                class="video-sonido-hint"
+                id="videoSonidoHint"
+            >
+                🔊 ACTIVAR SONIDO
+            </button>
 
         </div>
 
@@ -4172,6 +4369,265 @@ function generarBrillos(){
 
 
 /* =========================================================
+   CONTROLES DEL VIDEO DE PORTADA
+========================================================= */
+
+const videoPortada =
+    document.getElementById(
+        "videoPortada"
+    );
+
+const videoPlayBtn =
+    document.getElementById(
+        "videoPlayBtn"
+    );
+
+const videoSoundBtn =
+    document.getElementById(
+        "videoSoundBtn"
+    );
+
+const videoVolume =
+    document.getElementById(
+        "videoVolume"
+    );
+
+const videoFullscreenBtn =
+    document.getElementById(
+        "videoFullscreenBtn"
+    );
+
+const videoSonidoHint =
+    document.getElementById(
+        "videoSonidoHint"
+    );
+
+
+function actualizarControlesVideo(){
+
+    if(!videoPortada) return;
+
+    videoPlayBtn.textContent =
+        videoPortada.paused ? "▶" : "❚❚";
+
+    videoPlayBtn.setAttribute(
+        "aria-label",
+        videoPortada.paused
+            ? "Reproducir video"
+            : "Pausar video"
+    );
+
+    const estaSilenciado =
+        videoPortada.muted ||
+        videoPortada.volume === 0;
+
+    videoSoundBtn.textContent =
+        estaSilenciado ? "🔇" : "🔊";
+
+    videoSoundBtn.setAttribute(
+        "aria-label",
+        estaSilenciado
+            ? "Activar sonido"
+            : "Silenciar sonido"
+    );
+
+    videoVolume.value =
+        videoPortada.volume;
+
+    if(estaSilenciado){
+        videoSonidoHint.classList.remove(
+            "oculto"
+        );
+    }
+    else{
+        videoSonidoHint.classList.add(
+            "oculto"
+        );
+    }
+}
+
+
+if(videoPortada){
+
+    videoPortada.volume=1;
+    videoPortada.muted=true;
+
+    videoPortada.addEventListener(
+        "play",
+        actualizarControlesVideo
+    );
+
+    videoPortada.addEventListener(
+        "pause",
+        actualizarControlesVideo
+    );
+
+    videoPortada.addEventListener(
+        "volumechange",
+        actualizarControlesVideo
+    );
+
+    videoPortada.addEventListener(
+        "ended",
+        actualizarControlesVideo
+    );
+
+}
+
+
+videoPlayBtn.addEventListener(
+    "click",
+    () => {
+
+        if(!videoPortada) return;
+
+        if(videoPortada.paused){
+
+            videoPortada.play().catch(
+                error => {
+                    console.log(
+                        "No se pudo reproducir el video:",
+                        error
+                    );
+                }
+            );
+
+        }
+        else{
+
+            videoPortada.pause();
+
+        }
+
+    }
+);
+
+
+function activarSonidoVideo(){
+
+    if(!videoPortada) return;
+
+    videoPortada.muted=false;
+    videoPortada.volume=1;
+
+    videoPortada.play().catch(
+        error => {
+            console.log(
+                "El navegador requiere iniciar el video manualmente:",
+                error
+            );
+        }
+    );
+
+    actualizarControlesVideo();
+}
+
+
+videoSoundBtn.addEventListener(
+    "click",
+    () => {
+
+        if(!videoPortada) return;
+
+        if(
+            videoPortada.muted ||
+            videoPortada.volume===0
+        ){
+
+            activarSonidoVideo();
+
+        }
+        else{
+
+            videoPortada.muted=true;
+            actualizarControlesVideo();
+
+        }
+
+    }
+);
+
+
+videoSonidoHint.addEventListener(
+    "click",
+    activarSonidoVideo
+);
+
+
+videoVolume.addEventListener(
+    "input",
+    () => {
+
+        if(!videoPortada) return;
+
+        const volumen =
+            Number(videoVolume.value);
+
+        videoPortada.volume=volumen;
+        videoPortada.muted=volumen===0;
+
+        if(volumen>0){
+            videoPortada.play().catch(
+                () => {}
+            );
+        }
+
+        actualizarControlesVideo();
+
+    }
+);
+
+
+videoFullscreenBtn.addEventListener(
+    "click",
+    () => {
+
+        if(!videoPortada) return;
+
+        if(
+            document.fullscreenElement ||
+            document.webkitFullscreenElement
+        ){
+
+            if(document.exitFullscreen){
+                document.exitFullscreen().catch(
+                    () => {}
+                );
+            }
+            else if(document.webkitExitFullscreen){
+                document.webkitExitFullscreen();
+            }
+
+            return;
+        }
+
+        if(videoPortada.requestFullscreen){
+
+            videoPortada.requestFullscreen().catch(
+                () => {
+
+                    if(videoPortada.webkitEnterFullscreen){
+                        videoPortada.webkitEnterFullscreen();
+                    }
+
+                }
+            );
+
+        }
+        else if(videoPortada.webkitEnterFullscreen){
+
+            videoPortada.webkitEnterFullscreen();
+
+        }
+
+    }
+);
+
+
+actualizarControlesVideo();
+
+
+/* =========================================================
    SOBRE
 ========================================================= */
 
@@ -4208,6 +4664,36 @@ sobre.addEventListener(
             mostrarPantalla(
                 "portada"
             );
+
+            /*
+               El video entra limpio en 0 segundos y comienza
+               automáticamente en silencio. El usuario puede
+               activar el audio con un toque, sin depender
+               de los controles nativos del navegador.
+            */
+            setTimeout(() => {
+
+                if(videoPortada){
+
+                    videoPortada.pause();
+                    videoPortada.currentTime=0;
+                    videoPortada.muted=true;
+                    videoPortada.volume=1;
+
+                    videoPortada.play().catch(
+                        error => {
+                            console.log(
+                                "Autoplay del video bloqueado:",
+                                error
+                            );
+                        }
+                    );
+
+                    actualizarControlesVideo();
+
+                }
+
+            },2150);
 
         },2100);
 
@@ -4625,6 +5111,22 @@ document
             bloqueAcompanantes.style.display =
                 "none";
 
+
+            const videoPortada =
+                document.getElementById(
+                    "videoPortada"
+                );
+
+            if(videoPortada){
+
+                videoPortada.pause();
+                videoPortada.currentTime=0;
+                videoPortada.muted=true;
+                videoPortada.volume=1;
+
+                actualizarControlesVideo();
+
+            }
 
             mostrarPantalla(
                 "sobre"
