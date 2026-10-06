@@ -1555,8 +1555,13 @@ button{
 
     content:"";
 
+    display:block;
+
     width:35px;
+    min-width:35px;
     height:1px;
+
+    flex:0 0 35px;
 
     background:
         linear-gradient(
@@ -1568,8 +1573,7 @@ button{
 
 .detalles-ornamento::after{
 
-    transform:
-        rotate(180deg);
+    transform:rotate(180deg);
 }
 
 .titulo-seccion{
